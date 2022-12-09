@@ -10,7 +10,7 @@ from werkzeug.local import LocalProxy
 
 
 database_url = os.getenv("DATABASE_URL")
-engine = create_engine(database_url, echo=True)
+engine = create_engine(database_url)
 DBSession = sessionmaker(bind=engine, autocommit=False)
 
 

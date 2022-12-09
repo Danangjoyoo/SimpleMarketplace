@@ -6,7 +6,8 @@ from flask_toolkits.responses import JSONResponse
 
 from app.queries import as_dict
 from app.queries.product_query import (
-    select_product_list, select_specific_product, insert_product
+    select_product_list, select_specific_product, insert_product,
+    update_product, delete_from_product
 )
 from app.utils.exception import InvalidProcess
 
@@ -59,17 +60,33 @@ def post_product(name: str, description: str):
         InvalidProcess.handle_exception(error)
 
 
-def post_product(product_id: int, name: str, description: str):
+def put_product(product_id: int, name: str, description: str):
     """
     """
     try:
-        logger.info(f"create product {name=}")
+        logger.info(f"udpate product {product_id=} {name=}")
 
-        product = insert_product(name, description)
+        product = update_product(product_id, name, description)
         product = as_dict(product)
 
         return product
 
     except Exception as error:
-        logger.error(f"failed to get specific product : {error}")
+        logger.error(f"failed to update product : {error}")
+        InvalidProcess.handle_exception(error)
+
+
+def delete_product(product_id: int):
+    """
+    """
+    try:
+        logger.info(f"delete product {product_id=}")
+
+        delete_from_product(product_id)
+        status = {"status": 1}
+
+        return status
+
+    except Exception as error:
+        logger.error(f"failed to update product : {error}")
         InvalidProcess.handle_exception(error)

@@ -47,10 +47,9 @@ class InvalidProcess(Exception):
         raise InvalidProcess(error_message, status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-def handle_commit(error_message):
+def handle_commit():
     try:
         session.commit()
     except Exception as error:
-        message = f"{error_message or 'failed to commit'}. {error}"
-        logger.error(message)
+        message = f"Session commit failed. {error}"
         InvalidProcess(f"{message}, {error}")

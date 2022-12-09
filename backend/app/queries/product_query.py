@@ -40,7 +40,7 @@ def insert_product(name: str, description: str):
     """
     product = Product(name=name, description=description)
     session.add(product)
-    handle_commit(error_message="failed to create product")
+    handle_commit()
 
     return product
 
@@ -59,6 +59,21 @@ def update_product(product_id: int, name: str, description: str):
     product.name = name
     product.description = description
 
-    handle_commit("failed to update product info")
+    handle_commit()
 
     return product
+
+
+def delete_from_product(product_id: int):
+    """
+    delete from product
+    where product.id = product_id
+    """
+    product = select_specific_product(product_id)
+
+    if not product:
+        raise InvalidProcess("product not found", 400)
+
+    session.delete(product)
+
+    handle_commit()

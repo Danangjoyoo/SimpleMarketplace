@@ -5,7 +5,8 @@ from flask_toolkits import Path, Header, Query, Body, File
 from flask_toolkits.responses import JSONResponse
 
 from app.controllers.product_controller import (
-    get_product_list, get_specific_product, post_product
+    get_product_list, get_specific_product, post_product,
+    put_product, delete_product
 )
 
 def get_product_list_view(
@@ -36,8 +37,12 @@ def update_product_view(
     name: str = Body(),
     description: str = Body()
 ):
-    pass
+    result = put_product(product_id, name, description)
+    return JSONResponse(result)
 
 
-def delete_product_view():
-    pass
+def delete_product_view(
+    product_id: int = Path()
+):
+    result = delete_product(product_id)
+    return JSONResponse(result)
