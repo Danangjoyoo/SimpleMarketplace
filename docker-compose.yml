@@ -22,7 +22,7 @@ services:
     volumes:
       - ./backend:/base
       - ./init:/init
-    command: bash -c "/init/start_backend.sh"
+    command: bash -c "supervisord && sleep 5s && tail -f /var/log/supervisor/uwsgi-stdout.log"
     ports:
       - "9000:80"
 
