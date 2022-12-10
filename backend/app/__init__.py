@@ -21,8 +21,8 @@ def make_app():
     """
 
     # import required file
-    Base.metadata.drop_all(engine)
-    Base.metadata.create_all(engine)
+    # Base.metadata.drop_all(engine)
+    # Base.metadata.create_all(engine)
 
     # instantiate application
     app = Flask(__name__)
