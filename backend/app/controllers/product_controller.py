@@ -66,10 +66,12 @@ def put_product(product_id: int, name: str, description: str):
     """
     """
     try:
-        logger.info(f"udpate product {product_id=} {name=}")
+        logger.info(f"update product {product_id=}")
 
         product = update_product(product_id, name, description)
         product = as_dict(product)
+
+        logger.info(f"product updated {product_id=}")
 
         return product
 
@@ -86,6 +88,8 @@ def delete_product(product_id: int):
 
         delete_from_product(product_id)
         status = {"status": 1}
+
+        logger.info(f"product deleted {product_id=}")
 
         return status
 
