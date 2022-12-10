@@ -9,7 +9,9 @@ from flask_toolkits import AutoSwagger
 # load env file before load module files
 load_dotenv("/base/app/.env")
 
-from app.database import Base, engine, database_middleware
+from app.database.connection import engine, database_middleware
+from app.database.models import Base
+from app.utils.exception import InvalidProcess
 from app.views import image_router, product_router, variant_router
 
 
@@ -41,5 +43,8 @@ def make_app():
     app.register_blueprint(image_router)
     app.register_blueprint(product_router)
     app.register_blueprint(variant_router)
+
+    # error handling
+    app.errorhandler(InvalidProcess)(InvalidProcess.application_handler)
 
     return app

@@ -46,6 +46,13 @@ class InvalidProcess(Exception):
 
         raise InvalidProcess(error_message, status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @staticmethod
+    def application_handler(error: "InvalidProcess"):
+        """
+        Handle application error for InvalidProcess Exception
+        """
+        return JSONResponse(error.payload, error.status_code)
+
 
 def handle_commit():
     try:
