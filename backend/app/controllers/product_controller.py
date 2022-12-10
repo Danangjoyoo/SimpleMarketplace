@@ -2,7 +2,6 @@
 Product Logic Controllers
 """
 from chain_logging.flask import logger
-from flask_toolkits.responses import JSONResponse
 
 from app.queries import as_dict
 from app.queries.product_query import (
