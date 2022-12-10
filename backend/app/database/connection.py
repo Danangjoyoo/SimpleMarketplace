@@ -10,14 +10,17 @@ from werkzeug.local import LocalProxy
 
 
 database_url = os.getenv("DATABASE_URL")
-engine = create_engine(database_url)
+engine = create_engine(database_url, echo=True)
 DBSession = sessionmaker(bind=engine, autocommit=False)
 
 
 def open_session():
     """
     """
-    g.db_session = DBSession()
+    print(1111, "db_session" in vars(g))
+    with DBSession() as sess:
+        g.db_session = sess
+    print(222222, "db_session" in vars(g))
 
 
 def close_session(response):

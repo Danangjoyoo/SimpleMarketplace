@@ -1,6 +1,7 @@
 """
 SQL Models
 """
+from datetime import datetime
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -33,8 +34,8 @@ class Product(Base):
     description = Column(Text, default="", nullable=True)
     images = Column(Integer, ForeignKey("image_collection.id", ondelete="CASCADE"), nullable=True)
     logo_id = Column(Integer, ForeignKey("image.id", ondelete="CASCADE"), nullable=True)
-    created_at = Column(DateTime, server_default=func.now(), nullable=False)
-    updated_at = Column(DateTime, onupdate=func.now(), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=func.now(), nullable=False)
 
 
 class Variant(Base):
@@ -45,5 +46,5 @@ class Variant(Base):
     size = Column(String(50), nullable=False)
     color = Column(String(20), nullable=False)
     images = Column(Integer, ForeignKey("image_collection.id", ondelete="CASCADE"), nullable=True)
-    created_at = Column(DateTime, server_default=func.now(), nullable=False)
-    updated_at = Column(DateTime, onupdate=func.now(), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=func.now(), nullable=False)
