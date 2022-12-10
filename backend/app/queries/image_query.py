@@ -45,7 +45,7 @@ def insert_image(image_url: str):
     return image
 
 
-def update_image(image_id: int, name: str, description: str):
+def update_image(image_id: int, image_url: str):
     """
     update image p
     set p.name = name, p.description = description
@@ -56,8 +56,7 @@ def update_image(image_id: int, name: str, description: str):
     if not image:
         raise InvalidProcess("image not found", 400)
 
-    image.name = name
-    image.description = description
+    image.url = image_url
 
     handle_commit()
 
@@ -115,4 +114,15 @@ def delete_from_image_collection(image_collection_id: int):
 
     session.delete(image)
 
+    handle_commit()
+
+
+def register_image_collection(image_collection_id: int, image_id: int):
+    """
+    """
+    new_collection_link = Image_Collection_Link(
+        image_collection_id=image_collection_id,
+        image_id=image_id
+    )
+    session.add(new_collection_link)
     handle_commit()
