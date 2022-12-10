@@ -34,11 +34,11 @@ def select_specific_image(image_id: int) -> Image:
     return image
 
 
-def insert_image(name: str, description: str):
+def insert_image(image_url: str):
     """
-    insert into image (name, description) values (<name>, <description>)
+    insert into image (image_url) values (<image_url>)
     """
-    image = Image(name=name, description=description)
+    image = Image(url=image_url)
     session.add(image)
     handle_commit()
 
@@ -70,6 +70,45 @@ def delete_from_image(image_id: int):
     where image.id = image_id
     """
     image = select_specific_image(image_id)
+
+    if not image:
+        raise InvalidProcess("image not found", 400)
+
+    session.delete(image)
+
+    handle_commit()
+
+
+def select_specific_image_collection(image_collection_id: int) -> Image:
+    """
+    select * from image p where p.id = image_id
+    """
+    image = session.query(
+        Image_Collection
+    ).filter(
+        Image_Collection.id == image_collection_id
+    ).first()
+
+    return image
+
+
+def insert_image_collection():
+    """
+    insert into image (name, description) values (<name>, <description>)
+    """
+    image = Image_Collection()
+    session.add(image)
+    handle_commit()
+
+    return image
+
+
+def delete_from_image_collection(image_collection_id: int):
+    """
+    delete from image
+    where image.id = image_id
+    """
+    image = select_specific_image_collection(image_collection_id)
 
     if not image:
         raise InvalidProcess("image not found", 400)

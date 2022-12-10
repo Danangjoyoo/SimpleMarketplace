@@ -34,11 +34,11 @@ def select_specific_product(product_id: int) -> Product:
     return product
 
 
-def insert_product(name: str, description: str):
+def insert_product(name: str, description: str, image_collection_id: int, logo_id: int):
     """
     insert into product (name, description) values (<name>, <description>)
     """
-    product = Product(name=name, description=description)
+    product = Product(name=name, description=description, images=image_collection_id, logo_id=logo_id)
     session.add(product)
     handle_commit()
 

@@ -8,6 +8,7 @@ from app.queries.product_query import (
     select_product_list, select_specific_product, insert_product,
     update_product, delete_from_product
 )
+from app.queries.image_query import insert_image, insert_image_collection
 from app.utils.exception import InvalidProcess
 
 
@@ -49,7 +50,9 @@ def post_product(name: str, description: str):
     try:
         logger.info(f"create product {name=}")
 
-        product = insert_product(name, description)
+        image_collection = insert_image_collection()
+        image_logo = insert_image("")
+        product = insert_product(name, description, image_collection.id, image_logo.id)
         product = as_dict(product)
 
         logger.info(f"product created {product=}")
