@@ -4,7 +4,7 @@ Query Init File
 from sqlalchemy.engine.row import Row
 
 
-def _to_dict(instance):
+def meta_object_to_dict(instance):
     """
     Convert query data to dict
 
@@ -14,16 +14,11 @@ def _to_dict(instance):
     Returns:
         - data (dict)
     """
-    try:
-        data = vars(instance)
-        del data["_sa_instance_state"]
-
-    except Exception:
-        attributes = [
-            key for key in vars(instance.__class__).keys()
-            if "_" not in [key[0], key[-1]]
-        ]
-        data = {attr: getattr(instance, attr) for attr in attributes}
+    attributes = [
+        key for key in vars(instance.__class__).keys()
+        if "_" not in [key[0], key[-1]]
+    ]
+    data = {attr: getattr(instance, attr) for attr in attributes}
 
     return data
 
@@ -45,13 +40,13 @@ def as_dict(instance):
             if isinstance(_object, Row):
                 mapped_object.append(_object._asdict())
             else:
-                mapped_object.append(_to_dict(_object))
+                mapped_object.append(meta_object_to_dict(_object))
 
     # single object
     else:
         if isinstance(instance, Row):
             mapped_object = instance._asdict()
         else:
-            mapped_object = _to_dict(instance)
+            mapped_object = meta_object_to_dict(instance)
 
     return mapped_object

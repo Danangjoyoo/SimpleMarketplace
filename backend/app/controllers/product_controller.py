@@ -53,6 +53,8 @@ def post_product(name: str, description: str):
         product = insert_product(name, description)
         product = as_dict(product)
 
+        logger.info(f"product created {product=}")
+
         return product
 
     except Exception as error:

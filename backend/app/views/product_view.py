@@ -1,6 +1,7 @@
 """
 Product Views
 """
+from chain_logging.flask import logger
 from flask_toolkits import Path, Header, Query, Body, File
 from flask_toolkits.responses import JSONResponse
 
