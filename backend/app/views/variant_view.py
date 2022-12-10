@@ -1,9 +1,9 @@
 """
 Variant Views
 """
-from chain_logging.flask import logger
 from flask_toolkits import Path, Header, Query, Body, File
 from flask_toolkits.responses import JSONResponse
+from typing import Optional
 
 from app.controllers import variant_controller as controller
 
@@ -25,19 +25,22 @@ def get_variant_view(
 
 
 def create_variant_view(
-    name: str = Body(),
-    description: str = Body()
+    product_id: int = Path(),
+    name: Optional[str] = Body(None),
+    size: Optional[str] = Body(None),
+    color: Optional[str] = Body(None)
 ):
-    result = controller.post_variant(name, description)
+    result = controller.post_variant(product_id, name, size, color)
     return JSONResponse(result)
 
 
 def update_variant_view(
     variant_id: int = Path(),
-    name: str = Body(),
-    description: str = Body()
+    name: Optional[str] = Body(None),
+    size: Optional[str] = Body(None),
+    color: Optional[str] = Body(None)
 ):
-    result = controller.put_variant(variant_id, name, description)
+    result = controller.put_variant(variant_id, name, size, color)
     return JSONResponse(result)
 
 
