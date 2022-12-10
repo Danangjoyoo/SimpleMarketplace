@@ -4,6 +4,7 @@ import os
 import time
 from flask import send_file
 from flask_toolkits import APIRouter, File, Path
+from flask_toolkits.responses import JSONResponse
 from werkzeug.datastructures import FileStorage
 
 from app.utils import InvalidProcess
@@ -23,6 +24,8 @@ def get_file(file_path: str = Path("")):
         return send_file(local_path)
 
     except Exception as error:
+        if isinstance(error, InvalidProcess):
+            raise error
         raise InvalidProcess(f"get file failed : {error}")
 
 

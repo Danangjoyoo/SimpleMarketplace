@@ -49,4 +49,4 @@ class InvalidProcess(Exception):
         """
         Handle application error for InvalidProcess Exception
         """
-        return JSONResponse(error.payload, error.status_code)
+        return error.response
