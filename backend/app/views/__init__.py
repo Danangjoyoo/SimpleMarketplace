@@ -10,10 +10,7 @@ product_router = APIRouter("product", __name__, url_prefix="/product", tags=["Pr
 variant_router = APIRouter("variant", __name__, url_prefix="/variant", tags=["Variant"])
 
 # Image Endpoints
-image_router.add_url_rule("", view_func=image_view.get_image_list_view, methods=["GET"])
-image_router.add_url_rule("/<int:image_id>", view_func=image_view.get_image_view, methods=["GET"])
 image_router.add_url_rule("/add", view_func=image_view.create_image_view, methods=["POST"])
-image_router.add_url_rule("/update/<int:image_id>", view_func=image_view.update_image_view, methods=["PUT"])
 image_router.add_url_rule("/delete/<int:image_id>", view_func=image_view.delete_image_view, methods=["DELETE"])
 
 # Product Endpoints
