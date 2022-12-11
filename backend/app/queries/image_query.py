@@ -4,21 +4,8 @@ Image Query File
 from typing import List
 
 from app.database.connection import session
-from app.database.models import Image, Image_Collection, Image_Collection_Link
+from app.database.models import Image, Image_Collection, Image_Collection_Link, Product, Variant
 from app.utils.exception import handle_commit, InvalidProcess
-
-
-def select_image_list(page: int, row: int) -> List[Image]:
-    """
-    select * from image
-    """
-    image_list = session.query(
-        Image
-    ).offset(
-        (page - 1) * row
-    ).limit(row).all()
-
-    return image_list
 
 
 def select_specific_image(image_id: int) -> Image:
@@ -32,6 +19,59 @@ def select_specific_image(image_id: int) -> Image:
     ).first()
 
     return image
+
+def select_image_collection_list(collection_id: int) -> List[Image]:
+    pass
+
+
+def select_product_image_list(product_id: int) -> List[Image]:
+    """
+    select * from image_collection_list icl
+    """
+    product_image_list = session.query(
+        Image
+    ).join(
+        Image_Collection_Link,
+        Image_Collection_Link.image_id == Image.id
+    ).join(
+        Image_Collection,
+        Image_Collection.id == Image_Collection_Link.image_collection_id
+    ).join(
+        Product,
+        Product.images == Image_Collection.id
+    ).filter(
+        Product.id == product_id
+    ).all()
+
+    return product_image_list
+
+
+def select_variant_image_list_from_product(product_id: int):
+    """
+    """
+    product_variant_image_list = session.query(
+        Variant.id.label("variant_id"),
+        Image.id.label("image_id"),
+        Image.url.label("image_url")
+    ).join(
+        Image_Collection_Link,
+        Image_Collection_Link.image_id == Image.id
+    ).join(
+        Image_Collection,
+        Image_Collection.id == Image_Collection_Link.image_collection_id
+    ).join(
+        Variant,
+        Variant.images == Image_Collection.id
+    ).join(
+        Product,
+        Product.id == Variant.product_id
+    ).filter(
+        Product.id == product_id
+    ).all()
+
+    return product_variant_image_list
+
+
 
 
 def insert_image(image_url: str):

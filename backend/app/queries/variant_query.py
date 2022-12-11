@@ -8,7 +8,7 @@ from app.database.models import Variant
 from app.utils.exception import handle_commit, InvalidProcess
 
 
-def select_variant_list(product_id: int, page: int, row: int) -> List[Variant]:
+def select_variant_list(product_id: int) -> List[Variant]:
     """
     select * from variant
     """
@@ -16,9 +16,7 @@ def select_variant_list(product_id: int, page: int, row: int) -> List[Variant]:
         Variant
     ).filter(
         Variant.product_id == product_id
-    ).offset(
-        (page - 1) * row
-    ).limit(row).all()
+    ).all()
 
     return variant_list
 
@@ -36,12 +34,19 @@ def select_specific_variant(variant_id: int) -> Variant:
     return variant
 
 
-def insert_variant(product_id: int, name: str, size: str, color: str):
+def insert_variant(
+    product_id: int,
+    image_collection_id: int,
+    name: str,
+    size: str,
+    color: str
+):
     """
     insert into variant (name, description) values (<name>, <description>)
     """
     variant = Variant(
         product_id=product_id,
+        images=image_collection_id,
         name=name,
         size=size,
         color=color

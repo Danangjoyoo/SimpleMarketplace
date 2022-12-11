@@ -15,8 +15,12 @@ from app.utils.exception import InvalidProcess
 
 def put_product_logo(product_id: int, image_file: FileStorage):
     try:
-        image_url = image_utils.process_image_upload(image_file)
         product = select_specific_product(product_id)
+
+        if not product:
+            raise InvalidProcess(f"product not found {product_id=}")
+
+        image_url = image_utils.process_image_upload(image_file)
         update_image(product.logo_id, image_url)
 
         return {"status": 1}
@@ -30,9 +34,13 @@ def put_product_logo(product_id: int, image_file: FileStorage):
 
 def post_product_image_collection(product_id: int, image_file: FileStorage):
     try:
+        product = select_specific_product(product_id)
+
+        if not product:
+            raise InvalidProcess(f"product not found {product_id=}")
+
         image_url = image_utils.process_image_upload(image_file)
         new_image = insert_image(image_url)
-        product = select_specific_product(product_id)
         register_image_collection(product.images, new_image.id)
         new_image = as_dict(new_image)
 
@@ -47,10 +55,15 @@ def post_product_image_collection(product_id: int, image_file: FileStorage):
 
 def post_variant_image_collection(variant_id: int, image_file: FileStorage):
     try:
+        variant = select_specific_variant(variant_id)
+
+        if not variant:
+            raise InvalidProcess(f"variant not found {variant_id=}")
+
         image_url = image_utils.process_image_upload(image_file)
         new_image = insert_image(image_url)
-        variant = select_specific_variant(variant_id)
         register_image_collection(variant.images, new_image.id)
+        new_image = as_dict(new_image)
 
         return new_image
 

@@ -9,11 +9,9 @@ from app.controllers import variant_controller as controller
 
 
 def get_variant_list_view(
-    product_id: int = Path(),
-    page: int = Query(1),
-    row: int = Query(10)
+    product_id: int = Path()
 ):
-    result = controller.get_variant_list(product_id, page, row)
+    result = controller.get_variant_list(product_id)
     return JSONResponse(result)
 
 

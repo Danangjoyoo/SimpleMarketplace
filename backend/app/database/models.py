@@ -1,6 +1,7 @@
 """
 SQL Models
 """
+from uuid import uuid4
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, func
 from sqlalchemy.ext.declarative import declarative_base
@@ -18,6 +19,7 @@ class Image(Base):
 class Image_Collection(Base):
     __tablename__ = "image_collection"
     id = Column(Integer, primary_key=True, autoincrement=True, index=True, nullable=False)
+    collection_hash = Column(String(100), default=lambda: uuid4().hex, nullable=False)
 
 
 class Image_Collection_Link(Base):

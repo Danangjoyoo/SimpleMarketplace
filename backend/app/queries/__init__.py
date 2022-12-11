@@ -33,7 +33,7 @@ def as_dict(instance):
     Return:
         - mapped_object (List[Dict[str, Any]] or Dict[str, Any])
     """
-    # multiple instance in list or tuple
+    # multiple instance in a list
     if isinstance(instance, list):
         mapped_object = []
         for _object in instance:

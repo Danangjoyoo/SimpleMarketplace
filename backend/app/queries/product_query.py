@@ -4,7 +4,7 @@ Product Query File
 from typing import List
 
 from app.database.connection import session
-from app.database.models import Product
+from app.database.models import Image, Image_Collection, Image_Collection_Link, Product, Variant
 from app.utils.exception import handle_commit, InvalidProcess
 
 
@@ -13,12 +13,33 @@ def select_product_list(page: int, row: int) -> List[Product]:
     select * from product
     """
     product_list = session.query(
-        Product
+        Product.id.label("product_id"),
+        Product.name.label("product_name"),
+        Image.url.label("logo_url")
+    ).join(
+        Image,
+        Image.id == Product.logo_id
     ).offset(
         (page - 1) * row
     ).limit(row).all()
 
     return product_list
+
+
+def select_specific_product_details(product_id: int):
+    product = session.query(
+        Product.name,
+        Product.description,
+        Product.created_at,
+        Image.url.label("logo_url")
+    ).join(
+        Image,
+        Image.id == Product.logo_id
+    ).filter(
+        Product.id == product_id
+    ).first()
+
+    return product
 
 
 def select_specific_product(product_id: int) -> Product:
