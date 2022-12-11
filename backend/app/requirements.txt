@@ -9,7 +9,7 @@ exceptiongroup==1.0.4
 fastapi==0.88.0
 Flask==2.2.2
 flask-http-middleware==0.1.7
-flask-toolkits==0.7.6
+flask-toolkits==0.7.7
 greenlet==2.0.1
 h11==0.14.0
 idna==3.4
