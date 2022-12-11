@@ -25,7 +25,7 @@ services:
       - ./init:/init
     command: bash -c "supervisord && sleep 5s && tail -f /var/log/supervisor/uwsgi-stdout.log"
     ports:
-      - "9000:80"
+      - "9000:9000"
 
   sqldatabase:
     container_name: db
@@ -57,4 +57,4 @@ services:
       - ./init:/init
     command: bash -c "supervisord && sleep 5s && tail -f /var/log/supervisor/uwsgi-stdout.log"
     ports:
-      - "9100:80"
+      - "9100:9100"
