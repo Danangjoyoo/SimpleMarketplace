@@ -29,6 +29,7 @@ DROP TABLE IF EXISTS `image_collection`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `image_collection` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `collection_hash` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_image_collection_id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
