@@ -1,10 +1,8 @@
 """
 Image Views
 """
-from flask import jsonify
-from flask_toolkits import Path, Header, Query, Body, File, Form
+from flask_toolkits import Path, File
 from flask_toolkits.responses import JSONResponse
-from typing import Optional
 from werkzeug.datastructures import FileStorage
 
 from app.controllers import image_controller as controller

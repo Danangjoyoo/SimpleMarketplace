@@ -14,6 +14,9 @@ from app.utils.exception import InvalidProcess
 
 
 def put_product_logo(product_id: int, image_file: FileStorage):
+    """
+    Update product logo
+    """
     try:
         product = select_specific_product(product_id)
 
@@ -33,6 +36,9 @@ def put_product_logo(product_id: int, image_file: FileStorage):
 
 
 def post_product_image_collection(product_id: int, image_file: FileStorage):
+    """
+    add product image
+    """
     try:
         product = select_specific_product(product_id)
 
@@ -54,6 +60,9 @@ def post_product_image_collection(product_id: int, image_file: FileStorage):
 
 
 def post_variant_image_collection(variant_id: int, image_file: FileStorage):
+    """
+    add variant image
+    """
     try:
         variant = select_specific_variant(variant_id)
 
@@ -75,6 +84,9 @@ def post_variant_image_collection(variant_id: int, image_file: FileStorage):
 
 
 def delete_image(image_id: int):
+    """
+    delete specific image by id
+    """
     try:
         delete_from_image(image_id)
 

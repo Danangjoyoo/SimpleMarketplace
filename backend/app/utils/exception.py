@@ -1,7 +1,6 @@
 """
 Exception Handler Utils
 """
-from chain_logging.flask import logger
 from flask_toolkits import status
 from flask_toolkits.responses import JSONResponse
 from typing import Any, Dict
@@ -11,7 +10,8 @@ from app.database import session
 
 class InvalidProcess(Exception):
     """
-    Invalid Process
+    Exception class to handle invalid process, usage and operation error
+    and raised into a response with defined HTTP status code
     """
 
     def __init__(
@@ -55,8 +55,19 @@ class InvalidProcess(Exception):
 
 
 def handle_commit():
+    """
+    handle present commit
+
+    if there are any changes happened under transaction and it raise no error
+    doesn't mean it will succeed while commiting to the database.
+
+    Some of the cases like we have some changes then we commit, next it comes to partially succeed which means partially error also.
+    Commit without rollback gonna lead an issue which the partial data that already stored will gonna be hard to be completed
+    if the data we committed is dependant to each other. Then we need to rollback if theres any errors.
+    """
     try:
         session.commit()
     except Exception as error:
+        session.rollback()
         message = f"Session commit failed. {error}"
         InvalidProcess(f"{message}, {error}")

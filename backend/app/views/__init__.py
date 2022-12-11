@@ -4,6 +4,7 @@ View Function Collections
 from flask_toolkits import APIRouter
 from app.views import image_view, product_view, variant_view
 
+
 # Routers
 image_router = APIRouter("image", __name__, url_prefix="/image", tags=["Image"])
 product_router = APIRouter("product", __name__, url_prefix="/product", tags=["Product"])
