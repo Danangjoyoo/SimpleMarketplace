@@ -26,4 +26,4 @@ COPY ./frontend/deployments/app-nginx.conf /etc/nginx/conf.d/
 COPY ./frontend/deployments/nginx-supervisord.conf /etc/supervisor/conf.d/
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
-# npm install npm@9.2.0 && npm install antd && npm install && npm start
+# npm install -g npm@9.2.0 && npm install antd && npm install react-router-dom && npm install && npm start
