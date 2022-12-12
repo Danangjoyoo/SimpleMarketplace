@@ -38,6 +38,11 @@ def make_app():
     app.register_blueprint(product_router)
     app.register_blueprint(variant_router)
 
+    # healthcheck
+    @app.get("/health")
+    def health_check():
+        return {"message": "i'm healthy"}
+
     # error handling
     app.errorhandler(InvalidProcess)(InvalidProcess.application_handler)
 

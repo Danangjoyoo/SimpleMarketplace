@@ -20,15 +20,40 @@ def select_specific_image(image_id: int) -> Image:
 
     return image
 
-def select_image_collection_list(collection_id: int) -> List[Image]:
-    pass
+
+def select_highlight_image_product(product_id_list: List[int]):
+    """
+    """
+    highlight_image_list = session.query(
+        Product.id.label("product_id"),
+        Image.url.label("image_url")
+    ).join(
+        Image_Collection,
+        Image_Collection.id == Product.images
+    ).outerjoin(
+        Image_Collection_Link,
+        Image_Collection_Link.image_collection_id == Image_Collection.id
+    ).outerjoin(
+        Image,
+        Image.id == Image_Collection_Link.image_id
+    ).filter(
+        Product.id.in_(product_id_list)
+    ).group_by(
+        Product.id
+    ).all()
+
+    return highlight_image_list
 
 
-def select_product_image_list(product_id: int) -> List[Image]:
+def select_product_image_list(
+    product_id: int,
+    page: int = None,
+    row: int = 5
+) -> List[Image]:
     """
     select * from image_collection_list icl
     """
-    product_image_list = session.query(
+    product_image_query = session.query(
         Image
     ).join(
         Image_Collection_Link,
@@ -41,7 +66,13 @@ def select_product_image_list(product_id: int) -> List[Image]:
         Product.images == Image_Collection.id
     ).filter(
         Product.id == product_id
-    ).all()
+    )
+
+    # to avoid 0 and None, use `is not`
+    if page is not None:
+        product_image_query = product_image_query.offset((page - 1) * row).limit(row)
+
+    product_image_list = product_image_query.all()
 
     return product_image_list
 
