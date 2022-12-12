@@ -97,7 +97,7 @@ def post_product(name: str, description: str):
         image_collection = insert_image_collection()
 
         # preserve logo
-        image_logo = insert_image("")
+        image_logo = insert_image()
 
         # create product
         product = insert_product(name, description, image_collection.id, image_logo.id)

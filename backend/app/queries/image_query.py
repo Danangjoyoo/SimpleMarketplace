@@ -1,7 +1,7 @@
 """
 Image Query File
 """
-from typing import List
+from typing import List, Optional
 
 from app.database.connection import session
 from app.database.models import Image, Image_Collection, Image_Collection_Link, Product, Variant
@@ -105,7 +105,7 @@ def select_variant_image_list_from_product(product_id: int):
 
 
 
-def insert_image(image_url: str):
+def insert_image(image_url: Optional[str] = None):
     """
     insert into image (image_url) values (<image_url>)
     """
