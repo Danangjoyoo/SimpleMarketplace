@@ -4,12 +4,13 @@ Variant Logic Controllers
 from chain_logging.flask import logger
 
 from app.queries import as_dict
-from app.queries.image_query import insert_image_collection
+from app.queries.image_query import insert_image_collection, select_variant_image_collection
 from app.queries.variant_query import (
     select_variant_list, select_specific_variant, insert_variant,
     update_variant, delete_from_variant
 )
 from app.utils.exception import InvalidProcess
+
 
 
 def get_variant_list(product_id: int):
@@ -36,6 +37,10 @@ def get_specific_variant(variant_id: int):
 
         variant = select_specific_variant(variant_id)
         variant = as_dict(variant)
+
+        if variant:
+            image_list = select_variant_image_collection(variant_id)
+            variant["images"] = as_dict(image_list)
 
         return variant
 

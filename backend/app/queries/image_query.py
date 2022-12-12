@@ -103,6 +103,50 @@ def select_variant_image_list_from_product(product_id: int):
     return product_variant_image_list
 
 
+def select_variant_image_collection(variant_id: int):
+    """
+    """
+    highlight_image_list = session.query(
+        Variant.id.label("variant_id"),
+        Image.url.label("image_url")
+    ).join(
+        Image_Collection,
+        Image_Collection.id == Variant.images
+    ).join(
+        Image_Collection_Link,
+        Image_Collection_Link.image_collection_id == Image_Collection.id
+    ).join(
+        Image,
+        Image.id == Image_Collection_Link.image_id
+    ).filter(
+        Variant.id == variant_id
+    ).all()
+
+    return highlight_image_list
+
+
+def select_highlight_image_variant(variant_id_list: List[int]):
+    """
+    """
+    highlight_image_list = session.query(
+        Variant.id.label("variant_id"),
+        Image.url.label("image_url")
+    ).join(
+        Image_Collection,
+        Image_Collection.id == Variant.images
+    ).outerjoin(
+        Image_Collection_Link,
+        Image_Collection_Link.image_collection_id == Image_Collection.id
+    ).outerjoin(
+        Image,
+        Image.id == Image_Collection_Link.image_id
+    ).filter(
+        Variant.id.in_(variant_id_list)
+    ).group_by(
+        Variant.id
+    ).all()
+
+    return highlight_image_list
 
 
 def insert_image(image_url: Optional[str] = None):
