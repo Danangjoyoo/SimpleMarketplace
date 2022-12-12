@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `image`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `image` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `url` VARCHAR(500) NOT NULL,
+  `url` VARCHAR(500) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ix_image_id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
