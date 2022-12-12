@@ -1,16 +1,21 @@
 import pytest
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, event
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
 
+# load environment
+load_dotenv("./tests/.env")
+
+# application setup
+from app import make_app
 from app.database.models import Base
-from app.database.connection import DBSession
-from wsgi import application
 
-database_url = "sqlite:///./tests/test.db"
-
-sync_engine = create_engine(database_url)
+application = make_app("./tests/.env")
+sync_engine = create_engine(os.getenv("DATABASE_URL"))
 sync_session = sessionmaker(bind=sync_engine, autocommit=False, expire_on_commit=False)
+
 
 @pytest.fixture
 def app():
@@ -21,7 +26,6 @@ def app():
         cursor.close()
 
     application.config.update({"TESTING": True})
-    DBSession = sync_session
     Base.metadata.create_all(sync_engine)
     yield application
     Base.metadata.drop_all(sync_engine)

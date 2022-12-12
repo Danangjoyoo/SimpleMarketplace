@@ -6,18 +6,19 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_toolkits import AutoSwagger
 
-# load env file before load module files
-load_dotenv("/base/app/.env")
 
-from app.database.connection import setup_database_middleware
-from app.utils.exception import InvalidProcess
-from app.views import image_router, product_router, variant_router
-
-
-def make_app():
+def make_app(environment: str):
     """
     Application Factory
     """
+    # load env file before load module files
+    load_dotenv(environment)
+
+    # import dependencies
+    from app.database.connection import setup_database_middleware
+    from app.utils.exception import InvalidProcess
+    from app.views import image_router, product_router, variant_router
+
     # instantiate application
     app = Flask(__name__)
 
