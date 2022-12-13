@@ -5,14 +5,15 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker
 
-# load environment
-load_dotenv("./tests/.env")
 
 # application setup
 from app import make_app
-from app.database.models import Base
 
-application = make_app("./tests/.env")
+# load environment
+load_dotenv("./tests/.env")
+application = make_app()
+
+from app.database.models import Base
 sync_engine = create_engine(os.getenv("DATABASE_URL"))
 sync_session = sessionmaker(bind=sync_engine, autocommit=False, expire_on_commit=False)
 

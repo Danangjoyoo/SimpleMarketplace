@@ -7,13 +7,10 @@ from flask import Flask
 from flask_toolkits import AutoSwagger
 
 
-def make_app(environment: str):
+def make_app():
     """
     Application Factory
     """
-    # load env file before load module files
-    load_dotenv(environment)
-
     # import dependencies
     from app.database.connection import setup_database_middleware
     from app.utils.exception import InvalidProcess

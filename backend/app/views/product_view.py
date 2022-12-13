@@ -8,6 +8,13 @@ from flask_toolkits.responses import JSONResponse
 from app.controllers import product_controller as controller
 
 
+def search_product_view(
+    keyword: str = Query("")
+):
+    result = controller.search_product(keyword)
+    return JSONResponse(result)
+
+
 def get_product_list_view(
     page: int = Query(1),
     row: int = Query(10)

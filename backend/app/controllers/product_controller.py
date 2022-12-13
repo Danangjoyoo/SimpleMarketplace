@@ -7,17 +7,30 @@ from uuid import uuid4
 from app.queries import as_dict
 from app.queries.image_query import (
     select_product_image_list, insert_image, insert_image_collection,
-    select_variant_image_list_from_product, select_highlight_image_product,
-    select_highlight_image_variant
+    select_highlight_image_product, select_highlight_image_variant
 )
 from app.queries.product_query import (
     select_product_list, select_specific_product_details, insert_product,
-    update_product, delete_from_product
+    update_product, delete_from_product, select_product_name_by_keyword
 )
 from app.queries.variant_query import (
     select_variant_list
 )
 from app.utils.exception import InvalidProcess
+
+
+def search_product(keyword: str = ""):
+    try:
+        logger.info(f"search product {keyword=}")
+
+        product_list = select_product_name_by_keyword(keyword)
+        product_list = as_dict(product_list)
+
+        return product_list
+
+    except Exception as error:
+        logger.error(f"failed to get product list : {error}")
+        InvalidProcess.handle_exception(error)
 
 
 def get_product_list(page: int, row: int):

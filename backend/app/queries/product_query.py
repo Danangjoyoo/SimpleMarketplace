@@ -8,6 +8,19 @@ from app.database.models import Image, Image_Collection, Image_Collection_Link, 
 from app.utils.exception import handle_commit, InvalidProcess
 
 
+def select_product_name_by_keyword(keyword: str):
+    """
+    """
+    product_list = session.query(
+        Product.id,
+        Product.name
+    ).filter(
+        Product.name.like(f"%{keyword}%")
+    ).limit(5).all()
+
+    return product_list
+
+
 def select_product_list(page: int, row: int) -> List[Product]:
     """
     select * from product

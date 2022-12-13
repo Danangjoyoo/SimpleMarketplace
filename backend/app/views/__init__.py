@@ -17,6 +17,7 @@ image_router.add_url_rule("/variant/add-collection/<int:variant_id>", view_func=
 image_router.add_url_rule("/delete/<int:image_id>", view_func=image_view.delete_image_view, methods=["DELETE"])
 
 # Product Endpoints
+product_router.add_url_rule("/search", view_func=product_view.search_product_view, methods=["GET"])
 product_router.add_url_rule("", view_func=product_view.get_product_list_view, methods=["GET"])
 product_router.add_url_rule("/<int:product_id>", view_func=product_view.get_product_view, methods=["GET"])
 product_router.add_url_rule("/add", view_func=product_view.create_product_view, methods=["POST"])
