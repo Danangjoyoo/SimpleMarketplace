@@ -23,6 +23,7 @@ def select_specific_image(image_id: int) -> Image:
 
 def select_highlight_image_product(product_id_list: List[int]):
     """
+    get the first image uploaded in collection as a highlight
     """
     highlight_image_list = session.query(
         Product.id.label("product_id"),
@@ -51,7 +52,7 @@ def select_product_image_list(
     row: int = 5
 ) -> List[Image]:
     """
-    select * from image_collection_list icl
+    list and paginate all of product images
     """
     product_image_query = session.query(
         Image
@@ -79,6 +80,7 @@ def select_product_image_list(
 
 def select_variant_image_list_from_product(product_id: int):
     """
+    get variant list of a product
     """
     product_variant_image_list = session.query(
         Variant.id.label("variant_id"),
@@ -105,6 +107,7 @@ def select_variant_image_list_from_product(product_id: int):
 
 def select_variant_image_collection(variant_id: int):
     """
+    get variant image collection
     """
     highlight_image_list = session.query(
         Variant.id.label("variant_id"),
@@ -127,6 +130,7 @@ def select_variant_image_collection(variant_id: int):
 
 def select_highlight_image_variant(variant_id_list: List[int]):
     """
+    get the first image uploaded in collection as a highlight
     """
     highlight_image_list = session.query(
         Variant.id.label("variant_id"),
@@ -151,7 +155,7 @@ def select_highlight_image_variant(variant_id_list: List[int]):
 
 def insert_image(image_url: Optional[str] = None):
     """
-    insert into image (image_url) values (<image_url>)
+    add row to image table
     """
     image = Image(url=image_url)
     session.add(image)
@@ -162,9 +166,7 @@ def insert_image(image_url: Optional[str] = None):
 
 def update_image(image_id: int, image_url: str):
     """
-    update image p
-    set p.name = name, p.description = description
-    where p.id = image_id
+    update specific row of image table
     """
     image = select_specific_image(image_id)
 
@@ -180,8 +182,7 @@ def update_image(image_id: int, image_url: str):
 
 def delete_from_image(image_id: int):
     """
-    delete from image
-    where image.id = image_id
+    delete specific row from image table
     """
     image = select_specific_image(image_id)
 
@@ -193,22 +194,9 @@ def delete_from_image(image_id: int):
     handle_commit()
 
 
-def select_specific_image_collection(image_collection_id: int) -> Image:
-    """
-    select * from image p where p.id = image_id
-    """
-    image = session.query(
-        Image_Collection
-    ).filter(
-        Image_Collection.id == image_collection_id
-    ).first()
-
-    return image
-
-
 def insert_image_collection():
     """
-    insert into image (name, description) values (<name>, <description>)
+    add new image collection row
     """
     image = Image_Collection()
     session.add(image)
@@ -217,23 +205,9 @@ def insert_image_collection():
     return image
 
 
-def delete_from_image_collection(image_collection_id: int):
-    """
-    delete from image
-    where image.id = image_id
-    """
-    image = select_specific_image_collection(image_collection_id)
-
-    if not image:
-        raise InvalidProcess("image not found", 400)
-
-    session.delete(image)
-
-    handle_commit()
-
-
 def register_image_collection(image_collection_id: int, image_id: int):
     """
+    add a link between image and image collection table
     """
     new_collection_link = Image_Collection_Link(
         image_collection_id=image_collection_id,

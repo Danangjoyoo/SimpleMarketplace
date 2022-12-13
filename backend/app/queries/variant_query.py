@@ -10,7 +10,7 @@ from app.utils.exception import handle_commit, InvalidProcess
 
 def select_variant_list(product_id: int) -> List[Variant]:
     """
-    select * from variant
+    get all variant of a product
     """
     variant_list = session.query(
         Variant
@@ -23,7 +23,7 @@ def select_variant_list(product_id: int) -> List[Variant]:
 
 def select_specific_variant(variant_id: int) -> Variant:
     """
-    select * from variant p where p.id = variant_id
+    get specific variant
     """
     variant = session.query(
         Variant
@@ -42,7 +42,7 @@ def insert_variant(
     color: str
 ):
     """
-    insert into variant (name, description) values (<name>, <description>)
+    insert new row to variant table
     """
     variant = Variant(
         product_id=product_id,
@@ -60,9 +60,7 @@ def insert_variant(
 
 def update_variant(variant_id: int, name: str, size: str, color: str):
     """
-    update variant p
-    set p.name = name, p.description = description
-    where p.id = variant_id
+    update specific row from variant table
     """
     variant = select_specific_variant(variant_id)
 
@@ -80,8 +78,7 @@ def update_variant(variant_id: int, name: str, size: str, color: str):
 
 def delete_from_variant(variant_id: int):
     """
-    delete from variant
-    where variant.id = variant_id
+    delete specific row from variant table
     """
     variant = select_specific_variant(variant_id)
 

@@ -15,9 +15,6 @@ RUN export NVM_DIR="$HOME/.nvm" && \
     . ~/.bashrc && \
     nvm install node
 RUN apt-get install -y nodejs npm
-# RUN /root/.nvm/versions/node/v19.2.0/bin/npm install -g npm@9.2.0
-# RUN /root/.nvm/versions/node/v19.2.0/bin/npm install react
-# RUN /root/.nvm/versions/node/v19.2.0/bin/npm install antd
 
 # setting up nginx
 COPY ./frontend/deployments/app-nginx.conf /etc/nginx/conf.d/
@@ -25,5 +22,3 @@ COPY ./frontend/deployments/app-nginx.conf /etc/nginx/conf.d/
 # setting up supervisord
 COPY ./frontend/deployments/nginx-supervisord.conf /etc/supervisor/conf.d/
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-
-# npm install -g npm@9.2.0 && npm install antd && npm install react-router-dom && npm install && npm start

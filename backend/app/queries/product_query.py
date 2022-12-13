@@ -4,12 +4,13 @@ Product Query File
 from typing import List
 
 from app.database.connection import session
-from app.database.models import Image, Image_Collection, Image_Collection_Link, Product, Variant
+from app.database.models import Image, Product
 from app.utils.exception import handle_commit, InvalidProcess
 
 
 def select_product_name_by_keyword(keyword: str):
     """
+    find product name by keyword for search
     """
     product_list = session.query(
         Product.id,
@@ -23,7 +24,7 @@ def select_product_name_by_keyword(keyword: str):
 
 def select_product_list(page: int, row: int) -> List[Product]:
     """
-    select * from product
+    get and paginate all product list
     """
     product_list = session.query(
         Product.id.label("product_id"),
@@ -40,6 +41,9 @@ def select_product_list(page: int, row: int) -> List[Product]:
 
 
 def select_specific_product_details(product_id: int):
+    """
+    select spesific product details
+    """
     product = session.query(
         Product.name,
         Product.description,
@@ -57,7 +61,7 @@ def select_specific_product_details(product_id: int):
 
 def select_specific_product(product_id: int) -> Product:
     """
-    select * from product p where p.id = product_id
+    select specific product without any join
     """
     product = session.query(
         Product
@@ -70,7 +74,7 @@ def select_specific_product(product_id: int) -> Product:
 
 def insert_product(name: str, description: str, image_collection_id: int, logo_id: int):
     """
-    insert into product (name, description) values (<name>, <description>)
+    add new product
     """
     product = Product(name=name, description=description, images=image_collection_id, logo_id=logo_id)
     session.add(product)
@@ -81,9 +85,7 @@ def insert_product(name: str, description: str, image_collection_id: int, logo_i
 
 def update_product(product_id: int, name: str, description: str):
     """
-    update product p
-    set p.name = name, p.description = description
-    where p.id = product_id
+    udpate product
     """
     product = select_specific_product(product_id)
 
@@ -100,8 +102,7 @@ def update_product(product_id: int, name: str, description: str):
 
 def delete_from_product(product_id: int):
     """
-    delete from product
-    where product.id = product_id
+    delete from product table
     """
     product = select_specific_product(product_id)
 

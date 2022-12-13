@@ -34,5 +34,3 @@ Database Schema is presented by the image below
 
 
 ## Automation Testing
-1. Unit Testing
-2. Behavior Testing
