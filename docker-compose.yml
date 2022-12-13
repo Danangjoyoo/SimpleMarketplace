@@ -7,9 +7,9 @@ services:
       dockerfile: ./frontend.dockerfile
     volumes:
       - ./frontend:/base
-    command: bash -c "/base/deployments/run_web.sh"
+    command: bash -c "/usr/bin/supervisord && sleep 5s && tail -f /var/log/supervisor/supervisord.log"
     ports:
-      - "3000:3000"
+      - "3000:80"
 
   backend:
     container_name: backend

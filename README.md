@@ -10,6 +10,13 @@ Database Schema is presented by the image below
 
 ---
 
+## Docker Environment Details
+- Database : MySQL
+- Backend : Ubuntu:20.04 (simulated as an AWS EC2 ubuntu)
+- Frontend : Ubuntu:20.04 (simulated as an AWS EC2 ubuntu)
+- Storage : Ubuntu:20.04 (simulated as an AWS EC2 ubuntu)
+
+---
 ## How to serve
 1. Make sure you have docker installed in your machine
 2. Make sure your docker has docker-compose plugin
@@ -34,3 +41,23 @@ Database Schema is presented by the image below
 
 
 ## Automation Testing
+1. setup a virtualenv
+    ```
+    python3 -m virtualenv venv
+    ```
+2. Activate
+    ```
+    . venv/bin/activate
+    ```
+3. Install dependencies
+    ```
+    pip install --upgrade pip && pip install -r ./backend/requirements.txt
+    ```
+4. Go to backend directory
+    ```
+    cd ./backend
+    ```
+5. run pytest
+    ```
+    pytest
+    ```
