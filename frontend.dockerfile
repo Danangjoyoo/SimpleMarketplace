@@ -8,13 +8,16 @@ RUN apt-get install -y supervisor
 RUN apt-get install -y curl
 
 # core tools
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-RUN export NVM_DIR="$HOME/.nvm" && \
-    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> ~/.bashrc && \
-    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> ~/.bashrc && \
-    . ~/.bashrc && \
-    nvm install node
-RUN apt-get install -y nodejs npm
+RUN apt-get install -y npm
+RUN npm cache clean -f
+RUN npm install -g n
+RUN n latest
+
+# building app
+COPY ./frontend/app /base/app
+WORKDIR /base/app
+RUN npm install
+RUN npm run build
 
 # setting up nginx
 COPY ./frontend/deployments/app-nginx.conf /etc/nginx/conf.d/
