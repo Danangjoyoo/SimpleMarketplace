@@ -34,7 +34,7 @@ Database Schema is presented by the image below
 ---
 
 ## API Documentation
-- This application is provided with `openapi` or `swagger` API documentation (Powered by [Flask-Toolkits](https://pypi.org/project/flask-toolkits)).
+- This application is provided with `openapi` or `swagger` API documentation Powered by [Flask-Toolkits](https://pypi.org/project/flask-toolkits) (I'm the author, kindly check [this](https://github.com/Danangjoyoo/flask-toolkits) repo also)
 - You can access http://localhost:9000/docs
 
     ![alt text](https://github.com/Danangjoyoo/SimpleMarketplace/blob/develop/docs/apidocs.png?raw=true)
@@ -61,3 +61,22 @@ Database Schema is presented by the image below
     ```
     pytest
     ```
+
+---
+
+## Web Pages Sneak Peek
+### Home Page
+<img alt="" width="800" src="https://github.com/Danangjoyoo/SimpleMarketplace/blob/develop/docs/home.png?raw=true"/>
+
+### Product Detail Page
+<img alt="" width="800" src="https://github.com/Danangjoyoo/SimpleMarketplace/blob/develop/docs/product_detail.png?raw=true"/>
+
+### Create Product Page
+<img alt="" width="800" src="https://github.com/Danangjoyoo/SimpleMarketplace/blob/develop/docs/create_prodct.png?raw=true"/>
+
+### Update Product Page
+<img alt="" width="800" src="https://github.com/Danangjoyoo/SimpleMarketplace/blob/develop/docs/update_product.png?raw=true"/>
+<img alt="" width="800" src="https://github.com/Danangjoyoo/SimpleMarketplace/blob/develop/docs/update_product2.png?raw=true"/>
+
+### Variant Detail
+<img alt="" width="800" src="https://github.com/Danangjoyoo/SimpleMarketplace/blob/develop/docs/variant_detail.png?raw=true"/>
